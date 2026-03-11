@@ -6,6 +6,6 @@ namespace Budweg2._0.Models
 {
     public class Item
     {
-
+        private int _item;
     }
 }
