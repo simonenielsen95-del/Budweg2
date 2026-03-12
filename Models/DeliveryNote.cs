@@ -14,7 +14,13 @@ namespace Budweg2._0.Models
         public int? StartQuantity { get { return startQuantity_; } set { startQuantity_ = value ?? 0; } }
         public int? ItemNo { get; set; }
 
+        public DeliveryNote(int startQuantity, int itemNo)
 
-       
+        {
+            startQuantity_ = startQuantity;
+            ItemNo = itemNo;
+
+        }
+
     }
 }
