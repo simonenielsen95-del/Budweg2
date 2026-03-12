@@ -8,6 +8,10 @@ namespace Budweg2._0.VievModels
 {
     internal class MainWindowViewModel
     {
+        public int ItemNo { get; set; }
+
+        public int Quantity { get; set; }
+
 
 
         public DeliveryNote CreateNewDeliveryNote()
