@@ -1,25 +1,27 @@
 ﻿<Window x:Class="Budweg2._0.MainWindow"
+        
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Budweg2._0"
+        xmlns:vms="clr-namespace:Budweg2._0.VievModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FF10BF10" Foreground="White" Height="59" Width="800" FontSize="36"><Run Text="                                "/><Run Language="da-dk" Text="B"/><Run Text="UDWEG"/></TextBlock>
         
         
-        <TextBox HorizontalAlignment="Left" Margin="243,148,0,0" TextWrapping="Wrap" Text="{Binding }" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="243,148,0,0" TextWrapping="Wrap" Text="{Binding ItemNo }" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
         <Label Content="Vare Nr.  " HorizontalAlignment="Left" Margin="184,144,0,0" VerticalAlignment="Top"/>
         
         <Label Content="Antal" HorizontalAlignment="Left" Margin="184,183,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="243,187,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="243,187,0,0" TextWrapping="Wrap" Text="{Binding Quantity}" VerticalAlignment="Top" Width="120"/>
         
         
         
         <TextBlock HorizontalAlignment="Left" Margin="196,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Opret ny følgeseddel" FontSize="18"/>
-        <Button Content="Gem" HorizontalAlignment="Left" Margin="600,299,0,0" VerticalAlignment="Top"/>
+        <Button Content="Gem" HorizontalAlignment="Left" Margin="600,299,0,0" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Window>
