@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Budweg2._0.VievModels;
+using Budweg2._0.Models;
 
 namespace Budweg2._0
 {
@@ -25,6 +26,12 @@ namespace Budweg2._0
             DataContext = mvm;
         }
 
-      
+        private void btnSaveNewDeliveryNote_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryNote deliverynote = new DeliveryNote();
+
+                deliverynote.StartQuantity = int.Parse(txtStartQuantity.Text);
+                deliverynote.ItemNo = int.Parse(txtItemNo.Text);
+        }
     }
 }
