@@ -26,12 +26,17 @@ namespace Budweg2._0
             DataContext = mvm;
         }
 
-        private void btnSaveNewDeliveryNote_Click(object sender, RoutedEventArgs e)
+        private void btnCreateNewDeliveryNote_Click(object sender, RoutedEventArgs e)
         {
-            DeliveryNote deliverynote = new DeliveryNote();
-
-                deliverynote.StartQuantity = int.Parse(txtStartQuantity.Text);
-                deliverynote.ItemNo = int.Parse(txtItemNo.Text);
+            int startQuantity = int.Parse(tbxQuantity.Text);
+            int itemNo = int.Parse(tbxItemNo.Text);
+            
+            DeliveryNote deliverynote = new DeliveryNote(startQuantity, itemNo);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }   
     }
-}
+}               
