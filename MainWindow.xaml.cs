@@ -28,10 +28,16 @@ namespace Budweg2._0
 
         private void btnSaveNewDeliveryNote_Click(object sender, RoutedEventArgs e)
         {
-            DeliveryNote deliverynote = new DeliveryNote();
+            int startQuantity = int.Parse(tbxQuantity.Text);
+            int itemNo = int.Parse(tbxItemNo.Text);
+            
+            DeliveryNote deliverynote = new DeliveryNote(startQuantity, itemNo);
 
-                deliverynote.StartQuantity = int.Parse(txtStartQuantity.Text);
-                deliverynote.ItemNo = int.Parse(txtItemNo.Text);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }   
     }
-}
+}               
