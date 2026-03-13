@@ -17,9 +17,9 @@
         
         <Label Content="Antal" HorizontalAlignment="Left" Margin="184,183,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbxQuantity" HorizontalAlignment="Left" Margin="243,187,0,0" TextWrapping="Wrap" Text="{Binding Quantity}" VerticalAlignment="Top" Width="120"/>
-        
-        
-        
+
+
+        <ListBox x:Name="ItemsListBox" Height="78" Width="338" DisplayMemberPath="ItemNo" SelectionChanged="ItemsListBox_SelectionChanged" RenderTransformOrigin="0.503,0.485" ItemsSource="{Binding OCDeliveryNotes}" Margin="25,231,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="196,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Opret ny følgeseddel" FontSize="18"/>
         <Button x:Name="btnSaveNewDeliveryNote" Content="Opret" HorizontalAlignment="Left" Margin="600,299,0,0" VerticalAlignment="Top"/>
 

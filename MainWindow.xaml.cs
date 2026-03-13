@@ -38,6 +38,11 @@ namespace Budweg2._0
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             
-        }   
+        }
+
+        private void ItemsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
     }
-}               
+}
