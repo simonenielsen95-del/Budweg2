@@ -12,14 +12,14 @@
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FF10BF10" Foreground="White" Height="59" Width="800" FontSize="36"><Run Text="                                "/><Run Language="da-dk" Text="B"/><Run Text="UDWEG"/></TextBlock>
 
 
-        <TextBox x:Name="tbxItemNo" HorizontalAlignment="Left" Margin="243,148,0,0" TextWrapping="Wrap" Text="{Binding ItemNo }" VerticalAlignment="Top" Width="120"/>
+        
         <Label Content="Vare Nr.  " HorizontalAlignment="Left" Margin="184,144,0,0" VerticalAlignment="Top"/>
 
         <Label Content="Antal" HorizontalAlignment="Left" Margin="184,183,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbxQuantity" HorizontalAlignment="Left" Margin="243,187,0,0" TextWrapping="Wrap" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
 
 
-        <ListBox x:Name="ItemsListBox" Height="78" Width="338" DisplayMemberPath="ItemNo" SelectedItem ="{Binding SelectedItem, Mode=TwoWay}" RenderTransformOrigin="0.503,0.485" ItemsSource="{Binding OCItems}" Margin="25,231,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        
         
         
         <TextBlock HorizontalAlignment="Left" Margin="196,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Opret ny følgeseddel" FontSize="18"/>
@@ -43,6 +43,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <ComboBox HorizontalAlignment="Left" Margin="243,148,0,0" VerticalAlignment="Top" Width="120" Text="{Binding ItemNo }" DisplayMemberPath="ItemNo" SelectedItem ="{Binding SelectedItem, Mode=TwoWay}" ItemsSource="{Binding OCItems}"/>
 
     </Grid>
 </Window>
