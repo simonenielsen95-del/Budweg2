@@ -12,6 +12,8 @@ namespace Budweg2._0.Repository
     {
 
         private readonly string ConnectionString;
+      
+
         private List<DeliveryNote> deliverynotes = new List<DeliveryNote>();
 
 
@@ -32,18 +34,18 @@ namespace Budweg2._0.Repository
         }
 
 
-            public void CreateDeliveryNote(DeliveryNote deliveryNoteToBeCreated, string connectionString)
+            public void CreateDeliveryNote(DeliveryNote deliveryNote)
             {
-               using (SqlConnection con = new SqlConnection(connectionString))
+               using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
                     con.Open();
                     using (SqlCommand cmd = new SqlCommand("INSERT INTO DeliveryNote (StartQuantity, ItemNo) " +
                          "VALUES(@StartQuantity,@ItemNo); " +
                           "SELECT @@IDENTITY", con))
                     {
-                        cmd.Parameters.Add("@StartQuantity", SqlDbType.Int).Value = deliveryNoteToBeCreated.StartQuantity;
-                        cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = deliveryNoteToBeCreated.ItemNo;
-                        deliveryNoteToBeCreated.OrderNo = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.Parameters.Add("@StartQuantity", SqlDbType.Int).Value = deliveryNote.StartQuantity;
+                        cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = deliveryNote.ItemNo;
+                        deliveryNote.OrderNo = Convert.ToInt32(cmd.ExecuteScalar());
                     }
                 }
             }

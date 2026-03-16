@@ -12,7 +12,7 @@ namespace Budweg2._0.Repository
     {
 
         private readonly string ConnectionString;
-        private List<Item> items;
+        private readonly List<Item> items;
 
         public ItemRepository()
         {
