@@ -32,7 +32,7 @@ namespace Budweg2._0
             int itemNo = int.Parse(tbxItemNo.Text);
             
             DeliveryNote deliverynote = new DeliveryNote(startQuantity, itemNo);
-
+            mvm.OCDeliveryNotes.Add(deliverynote);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

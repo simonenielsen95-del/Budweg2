@@ -9,5 +9,9 @@ namespace Budweg2._0.Models
     {
         public int ItemNo { get; set; }
 
+        public Item(int )
+        {
+            
+        }
     }
 }
