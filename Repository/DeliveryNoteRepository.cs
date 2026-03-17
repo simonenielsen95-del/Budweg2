@@ -12,17 +12,17 @@ namespace Budweg2._0.Repository
     {
 
         private readonly string ConnectionString;
-        private List<DeliveryNote> deliverynotes = new List<DeliveryNote>();
+        private List<DeliveryNote> deliverynotes;
 
 
         public DeliveryNoteRepository()
         {
-                IConfigurationRoot config = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-                deliverynotes = new List<DeliveryNote>();
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            deliverynotes = new List<DeliveryNote>();
 
-                ConnectionString = config.GetConnectionString("MyDBConnection")!;
+            ConnectionString = config.GetConnectionString("MyDBConnection")!;
         }
 
         public List<DeliveryNote> GetAllDeliveryNotes()
@@ -32,21 +32,21 @@ namespace Budweg2._0.Repository
         }
 
 
-            public void CreateDeliveryNote(DeliveryNote deliveryNoteToBeCreated, string connectionString)
+        public void CreateDeliveryNote(DeliveryNote deliveryNote)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-               using (SqlConnection con = new SqlConnection(connectionString))
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO DeliveryNote (StartQuantity, ItemNo) " +
+                     "VALUES(@StartQuantity,@ItemNo); " +
+                      "SELECT @@IDENTITY", con))
                 {
-                    con.Open();
-                    using (SqlCommand cmd = new SqlCommand("INSERT INTO DeliveryNote (StartQuantity, ItemNo) " +
-                         "VALUES(@StartQuantity,@ItemNo); " +
-                          "SELECT @@IDENTITY", con))
-                    {
-                        cmd.Parameters.Add("@StartQuantity", SqlDbType.Int).Value = deliveryNoteToBeCreated.StartQuantity;
-                        cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = deliveryNoteToBeCreated.ItemNo;
-                        deliveryNoteToBeCreated.OrderNo = Convert.ToInt32(cmd.ExecuteScalar());
-                    }
+                    cmd.Parameters.Add("@StartQuantity", SqlDbType.Int).Value = deliveryNote.StartQuantity;
+                    cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = deliveryNote.ItemNo;
+                    deliveryNote.OrderNo = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
+        }
 
         //    public List<DeliveryNote> RetrieveAllDeliveryNotes()
         //    {
@@ -74,6 +74,72 @@ namespace Budweg2._0.Repository
         //        }
         //        return deliverynotes;
         //    }
+
+
+
+
+
+        //Stored procedure: til at hente en DeliveryNote ud fra OrderNo
+        //public DeliveryNote GetDeliveryNote(int orderNo)
+        //{
+        //    using (SqlConnection con = new SqlConnection(ConnectionString))
+        //    {
+        //        con.Open();
+        //        using (SqlCommand cmd = new SqlCommand($"SELECT StartQuantity, ItemNo FROM DeliveryNote WHERE OrderNo = @OrderNo", con))
+        //            cmd.Parameters.AddWithValue("@OrderNo", orderNo);
+
+        //        using (SqlDataReader Reader = cmd.ExecuteReader())
+        //        {
+
+        //            if (reader.Read())
+        //            {
+        //                return new DeliveryNote(reader.GetInt32(0), reader.GetInt32(1));
+        //            }
+
+
+        //        }
+        //    }
+        //    List<DeliveryNote> deliveryNote = new List<DeliveryNote>();
+        //    using (SqlConnection con = new SqlConnection(ConnectionString))
+        //    {
+        //        con.Open();
+        //        using (SqlCommand cmd = new SqlCommand($"SELECT StartQuantity, ItemNo FROM DeliveryNote WHERE OrderNo = {OrderNo}", con))
+        //        using (SqlDataReader reader = cmd.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                DeliveryNote deliveryNote1 = new DeliveryNote(reader.GetInt32(0), reader.GetInt32(1));
+        //                deliveryNote.Add(deliveryNote1);
+
+
+        //            }
+        //        }
+        //    }
+        //    return deliveryNote;
+        //}
+        public List<DeliveryNote> RetrieveAllDeliveryNotes()
+        {
+            List<DeliveryNote> deliverynotes = new List<DeliveryNote>();
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SELECT OrderNo, StartQuantity, ItemNo FROM DeliveryNote", con);
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DeliveryNote deliverynote = new DeliveryNote(dr.GetInt32(1), dr.GetInt32(2))
+                        {
+                            OrderNo = dr.GetInt32(0)
+                        };
+                        deliverynotes.Add(deliverynote);
+                    }
+
+
+                }
+            }
+            return deliverynotes;
+        }
+
     }
 }
-

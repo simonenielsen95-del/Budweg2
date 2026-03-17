@@ -23,20 +23,16 @@ namespace Budweg2._0
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = mvm;
+            DataContext = new MainWindowViewModel();
         }
 
-        private void btnCreateNewDeliveryNote_Click(object sender, RoutedEventArgs e)
+        private void btnSaveNewDeliveryNote_Click(object sender, RoutedEventArgs e)
         {
-            int startQuantity = int.Parse(tbxQuantity.Text);
-            int itemNo = int.Parse(tbxItemNo.Text);
-            
-            DeliveryNote deliverynote = new DeliveryNote(startQuantity, itemNo);
+            var viewModel = (MainWindowViewModel)DataContext;
+            viewModel.AddDeliveryNote();
+
+
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
-        }   
     }
-}               
+}
