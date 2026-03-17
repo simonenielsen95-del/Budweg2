@@ -10,10 +10,8 @@ namespace Budweg2._0.Repository
 {
     internal class DeliveryNoteRepository
     {
-
         private readonly string ConnectionString;
         private List<DeliveryNote> deliverynotes;
-
 
         public DeliveryNoteRepository()
         {
@@ -27,7 +25,6 @@ namespace Budweg2._0.Repository
 
         public List<DeliveryNote> GetAllDeliveryNotes()
         {
-
             return deliverynotes;
         }
 
