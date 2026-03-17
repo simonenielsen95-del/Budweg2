@@ -32,7 +32,7 @@ namespace Budweg2._0.VievModels
 
         public ObservableCollection<DeliveryNote> OCDeliveryNotes { get; set; }
 
-        // Property for binding items in the UI
+
         public ObservableCollection<Item> OCItems { get; set; } = new ObservableCollection<Item>();
 
         public MainWindowViewModel()
@@ -90,7 +90,9 @@ namespace Budweg2._0.VievModels
 
             OCDeliveryNotes.Add(newNote);
 
-            //nulstille felter
+
+
+
             Quantity = 0;
             SelectedItem = null;
 
@@ -101,12 +103,6 @@ namespace Budweg2._0.VievModels
 
 
 
-        //Stored procedure: til at hente en følgeseddel baseret på ordre nr.
-        //DeliveryNote note = deliveryNoteRepository.GetDeliveryNote(1);
-        //    if (note != null)
-        //    {
-                
-        //    }
         }
 
     }
