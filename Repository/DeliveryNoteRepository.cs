@@ -10,7 +10,6 @@ namespace Budweg2._0.Repository
 {
     internal class DeliveryNoteRepository
     {
-
         private readonly string ConnectionString;
         private List<DeliveryNote> deliverynotes;
 
@@ -24,19 +23,24 @@ namespace Budweg2._0.Repository
             ConnectionString = config.GetConnectionString("MyDBConnection")!;
         }
 
-
-        public void CreateDeliveryNote(DeliveryNote deliveryNoteToBeCreated, string connectionString)
+        public List<DeliveryNote> GetAllDeliveryNotes()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            return deliverynotes;
+        }
+
+
+        public void CreateDeliveryNote(DeliveryNote deliveryNote)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand("INSERT INTO DeliveryNote (StartQuantity, ItemNo) " +
                      "VALUES(@StartQuantity,@ItemNo); " +
                       "SELECT @@IDENTITY", con))
                 {
-                    cmd.Parameters.Add("@StartQuantaty", SqlDbType.Int).Value = deliveryNoteToBeCreated.StartQuantity;
-                    cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = deliveryNoteToBeCreated.ItemNo;
-                    deliveryNoteToBeCreated.OrderNo = Convert.ToInt32(cmd.ExecuteScalar());
+                    cmd.Parameters.Add("@StartQuantity", SqlDbType.Int).Value = deliveryNote.StartQuantity;
+                    cmd.Parameters.Add("@ItemNo", SqlDbType.Int).Value = deliveryNote.ItemNo;
+                    deliveryNote.OrderNo = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
         }
@@ -47,17 +51,14 @@ namespace Budweg2._0.Repository
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT OrderNo, StartQuantity, ItemNo", con);
+                SqlCommand cmd = new SqlCommand("SELECT OrderNo, StartQuantity, ItemNo FROM DeliveryNote", con);
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        DeliveryNote deliverynote = new DeliveryNote
+                        DeliveryNote deliverynote = new DeliveryNote(dr.GetInt32(1), dr.GetInt32(2))
                         {
-                            OrderNo = dr.GetInt32(0),
-                            StartQuantity = dr.GetInt32(0),
-                            ItemNo = dr.GetInt32(0)
-                            
+                            OrderNo = dr.GetInt32(0)
                         };
                         deliverynotes.Add(deliverynote);
                     }
@@ -65,8 +66,8 @@ namespace Budweg2._0.Repository
 
                 }
             }
-          return deliverynotes;
+            return deliverynotes;
         }
+
     }
 }
-

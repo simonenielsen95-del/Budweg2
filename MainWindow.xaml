@@ -10,18 +10,40 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Background="#FF10BF10" Foreground="White" Height="59" Width="800" FontSize="36"><Run Text="                                "/><Run Language="da-dk" Text="B"/><Run Text="UDWEG"/></TextBlock>
+
+
         
-        
-        <TextBox x:Name="tbxItemNo" HorizontalAlignment="Left" Margin="243,148,0,0" TextWrapping="Wrap" Text="{Binding ItemNo }" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
         <Label Content="Vare Nr.  " HorizontalAlignment="Left" Margin="184,144,0,0" VerticalAlignment="Top"/>
-        
+
         <Label Content="Antal" HorizontalAlignment="Left" Margin="184,183,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="tbxQuantity" HorizontalAlignment="Left" Margin="243,187,0,0" TextWrapping="Wrap" Text="{Binding Quantity}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="tbxQuantity" HorizontalAlignment="Left" Margin="243,187,0,0" TextWrapping="Wrap" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120"/>
+
+
         
         
         
         <TextBlock HorizontalAlignment="Left" Margin="196,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Opret ny følgeseddel" FontSize="18"/>
-        <Button x:Name="btnSaveNewDeliveryNote" Content="Gem" HorizontalAlignment="Left" Margin="600,299,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnSaveNewDeliveryNote" Content="Opret" HorizontalAlignment="Left" Margin="600,299,0,0" VerticalAlignment="Top" Click="btnSaveNewDeliveryNote_Click"/>
+
+        <ListBox 
+                ItemsSource="{Binding OCDeliveryNotes}" 
+                Height="150" Width="300"
+                Margin="400,100,0,0"
+                HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Ordre: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding OrderNo}" Margin="0,0,10,0"/>
+                        <TextBlock Text="Vare: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding ItemNo}" Margin="0,0,10,0"/>
+                        <TextBlock Text="Antal: " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding StartQuantity}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ComboBox HorizontalAlignment="Left" Margin="243,148,0,0" VerticalAlignment="Top" Width="120" Text="{Binding ItemNo }" DisplayMemberPath="ItemNo" SelectedItem ="{Binding SelectedItem, Mode=TwoWay}" ItemsSource="{Binding OCItems}"/>
 
     </Grid>
 </Window>
