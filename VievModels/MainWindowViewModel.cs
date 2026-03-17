@@ -8,26 +8,29 @@ using System.Windows;
 using Budweg2._0.Repository;
 using System.ComponentModel;
 
+using Microsoft.Identity.Client;
+
 namespace Budweg2._0.VievModels
 {
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
+ 
 
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private DeliveryNoteRepository deliveryNoteRepository = new DeliveryNoteRepository();
         private ItemRepository itemRepository = new ItemRepository();
+        private DeliveryNoteRepository deliveryNoteRepository = new DeliveryNoteRepository();
 
         public int ItemNo { get; set; }
 
         public int Quantity { get; set; }
 
-        public ObservableCollection<DeliveryNote> OCDeliveryNotes { get; set; } = new ObservableCollection<DeliveryNote>();
+        public ObservableCollection<DeliveryNote> OCDeliveryNotes { get; set; }
 
         // Property for binding items in the UI
         public ObservableCollection<Item> OCItems { get; set; } = new ObservableCollection<Item>();
@@ -35,15 +38,14 @@ namespace Budweg2._0.VievModels
         public MainWindowViewModel()
         {
 
-            foreach (DeliveryNote dn in deliveryNoteRepository.GetAllDeliveryNotes())
-            {
-                OCDeliveryNotes.Add(dn);
-            }
+            OCDeliveryNotes = new ObservableCollection<DeliveryNote>();
+
 
             foreach (Item item in itemRepository.RetriveAll())
             {
                 OCItems.Add(item);
             }
+            LoadAllNotes();
         }
 
         private Item _selectedItem;
@@ -52,15 +54,21 @@ namespace Budweg2._0.VievModels
             get { return _selectedItem; }
             set
 
-                {
-                    _selectedItem = value;
+            {
+                _selectedItem = value;
 
-                   OnPropertyChanged(nameof(SelectedItem));
-                }
-
+                OnPropertyChanged(nameof(SelectedItem));
             }
-        
 
+        }
+
+        public void LoadAllNotes()
+        {
+            foreach (DeliveryNote dn in deliveryNoteRepository.RetrieveAllDeliveryNotes())
+            {
+                OCDeliveryNotes.Add(dn);
+            }
+        }
         public void AddDeliveryNote()
         {
             if (SelectedItem == null)
@@ -69,7 +77,7 @@ namespace Budweg2._0.VievModels
                 return;
             }
 
-            if (Quantity <=0)
+            if (Quantity <= 0)
             {
                 MessageBox.Show("Antallet skal være større end 0.");
                 return;
@@ -78,7 +86,7 @@ namespace Budweg2._0.VievModels
 
             DeliveryNote newNote = new DeliveryNote(Quantity, SelectedItem.ItemNo);
 
-            deliveryNoteRepository.CreateDeliveryNote(newNote); //tilføje en add-metode i repo
+            deliveryNoteRepository.CreateDeliveryNote(newNote);
 
             OCDeliveryNotes.Add(newNote);
 
@@ -87,10 +95,18 @@ namespace Budweg2._0.VievModels
             SelectedItem = null;
 
             OnPropertyChanged(nameof(Quantity));
-                OnPropertyChanged(nameof(SelectedItem));
+            OnPropertyChanged(nameof(SelectedItem));
 
             MessageBox.Show($"Følgeseddel oprettet med ordre nr.: {newNote.OrderNo}");
 
+
+
+        //Stored procedure: til at hente en følgeseddel baseret på ordre nr.
+        //DeliveryNote note = deliveryNoteRepository.GetDeliveryNote(1);
+        //    if (note != null)
+        //    {
+                
+        //    }
         }
 
     }
